@@ -4,17 +4,35 @@
  */
 package tienda;
 
+import datos.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author bryan
  */
 public class Factura extends javax.swing.JFrame {
 
+    Conexion con = new Conexion();
+    DefaultTableModel dm = new DefaultTableModel();
+
     /**
      * Creates new form Factura
      */
     public Factura() {
         initComponents();
+//        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        String titulos[] = {"Codigo", "Nombre", "Cantidad", "Precio", "Subtotal"};
+        dm.setColumnIdentifiers(titulos);
+        jTable1.setModel(dm);
     }
 
     /**
@@ -26,21 +44,405 @@ public class Factura extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jlblSlogan = new javax.swing.JLabel();
+        jlblTitulo = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jbtnBuscarCliente = new javax.swing.JButton();
+        jftxtBusquedaCedula = new javax.swing.JFormattedTextField();
+        jbtnRegistrar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jlblCedula = new javax.swing.JLabel();
+        jtxtCedula = new javax.swing.JTextField();
+        jlblDireccion = new javax.swing.JLabel();
+        jtxtDireccion = new javax.swing.JTextField();
+        jlblNombres = new javax.swing.JLabel();
+        jlblTelefono = new javax.swing.JLabel();
+        jtxtNombres = new javax.swing.JTextField();
+        jtxtTelefono = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jtxtCorreo = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jlblNumFac = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jlblFecFac = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jtxtCodigo = new javax.swing.JTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Facturacion");
+        setBackground(new java.awt.Color(0, 102, 255));
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 153));
+
+        jlblSlogan.setBackground(new java.awt.Color(255, 255, 255));
+        jlblSlogan.setFont(new java.awt.Font("Microsoft JhengHei", 0, 12)); // NOI18N
+        jlblSlogan.setForeground(new java.awt.Color(255, 255, 255));
+        jlblSlogan.setText("Descubre mundos infinitos entre las paginas");
+
+        jlblTitulo.setBackground(new java.awt.Color(255, 255, 255));
+        jlblTitulo.setFont(new java.awt.Font("Microsoft JhengHei", 0, 24)); // NOI18N
+        jlblTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        jlblTitulo.setText("LibVerso");
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jLabel1.setFont(new java.awt.Font("Microsoft JhengHei", 1, 12)); // NOI18N
+        jLabel1.setText("Buscar Cliente");
+
+        jbtnBuscarCliente.setText("Buscar");
+        jbtnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnBuscarClienteActionPerformed(evt);
+            }
+        });
+
+        jftxtBusquedaCedula.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jbtnRegistrar.setText("Registrar");
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Datos del Cliente"))));
+
+        jlblCedula.setFont(new java.awt.Font("Microsoft JhengHei", 0, 12)); // NOI18N
+        jlblCedula.setText("Cedula:");
+
+        jlblDireccion.setFont(new java.awt.Font("Microsoft JhengHei", 0, 12)); // NOI18N
+        jlblDireccion.setText("Direccion:");
+
+        jlblNombres.setFont(new java.awt.Font("Microsoft JhengHei", 0, 12)); // NOI18N
+        jlblNombres.setText("Nombres:");
+
+        jlblTelefono.setFont(new java.awt.Font("Microsoft JhengHei", 0, 12)); // NOI18N
+        jlblTelefono.setText("Telefono:");
+
+        jLabel2.setFont(new java.awt.Font("Microsoft JhengHei", 0, 12)); // NOI18N
+        jLabel2.setText("Correo:");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(jlblDireccion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jtxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(63, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlblCedula)
+                    .addComponent(jLabel2))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlblNombres)
+                    .addComponent(jlblTelefono))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jtxtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblCedula)
+                    .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblNombres)
+                    .addComponent(jtxtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblTelefono)
+                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jtxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblDireccion)
+                    .addComponent(jtxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0))), "Datos de la Factura"));
+
+        jLabel3.setFont(new java.awt.Font("Microsoft JhengHei", 0, 12)); // NOI18N
+        jLabel3.setText("Nro Factura:");
+
+        jlblNumFac.setFont(new java.awt.Font("Microsoft JhengHei", 0, 12)); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Microsoft JhengHei", 0, 12)); // NOI18N
+        jLabel5.setText("Fecha:");
+
+        jlblFecFac.setFont(new java.awt.Font("Microsoft JhengHei", 1, 12)); // NOI18N
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jlblNumFac, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(28, 28, 28)
+                .addComponent(jlblFecFac, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jlblNumFac)
+                    .addComponent(jLabel5)
+                    .addComponent(jlblFecFac)))
+        );
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jtxtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtxtCodigoKeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jftxtBusquedaCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(220, 220, 220)
+                .addComponent(jtxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jbtnBuscarCliente)
+                    .addComponent(jftxtBusquedaCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnRegistrar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jtxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jlblTitulo)
+                        .addGap(216, 216, 216))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jlblSlogan)
+                        .addGap(138, 138, 138))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jlblTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jlblSlogan)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void buscarCliente() {
+        String cedula = jftxtBusquedaCedula.getText();
+        if (!cedula.equals("")) {
+            Connection cn = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            try {
+                cn = con.getConnection();
+                ps = cn.prepareStatement("SELECT * FROM clientes WHERE cedula=" + cedula + ";");
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    String apellido = rs.getString("apellido");
+                    String nombresCompletos = nombre + " " + apellido;
+                    jtxtCedula.setText(rs.getString("cedula"));
+                    jtxtNombres.setText(nombresCompletos);
+                    jtxtCorreo.setText(rs.getString("correo"));
+                    jtxtTelefono.setText(rs.getString("telefono"));
+                    jtxtDireccion.setText(rs.getString("direccion"));
+                    DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    String fechaActual = LocalDate.now().format(formatoFecha);
+                    jlblFecFac.setText(fechaActual);
+                } else {
+                    JOptionPane.showMessageDialog(null, "NO SE ENCONTRÓ EL CLIENTE");
+                }
+            } catch (SQLException e) {
+                // Manejo de excepciones
+            } finally {
+                try {
+                    if (rs != null) {
+                        rs.close();
+                    }
+                    if (ps != null) {
+                        ps.close();
+                    }
+                    if (cn != null) {
+                        cn.close();
+                    }
+                } catch (SQLException e) {
+                    // Manejo de excepciones al cerrar los recursos
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "DEBE COMPLETAR LOS CAMPOS");
+        }
+    }
+
+    public void agregarProducto() {
+        String barcode = jtxtCodigo.getText();
+        if (!barcode.equals("")) {
+            String registro[] = new String[5];
+            boolean encontrado = false;
+
+            for (int i = 0; i < dm.getRowCount(); i++) {
+                if (dm.getValueAt(i, 0).equals(barcode)) {
+                    int cantidad = Integer.parseInt(dm.getValueAt(i, 2).toString());
+                    double precio = Double.parseDouble(dm.getValueAt(i, 3).toString());
+                    cantidad++;
+                    double subtotal = cantidad * precio;
+                    dm.setValueAt(cantidad, i, 2);
+                    dm.setValueAt(subtotal, i, 4);
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            if (!encontrado) {
+                Connection cn = null;
+                PreparedStatement ps = null;
+                ResultSet rs = null;
+                try {
+                    cn = con.getConnection();
+                    ps = cn.prepareStatement("SELECT * FROM productos WHERE id = ?");
+                    ps.setString(1, barcode);
+                    rs = ps.executeQuery();
+                    if (rs.next()) {
+                        registro[0] = rs.getString("id");
+                        registro[1] = rs.getString("nombre");
+                        registro[2] = "1";
+                        registro[3] = rs.getString("precio");
+                        double subtotal = Double.parseDouble(registro[2]) * Double.parseDouble(registro[3]);
+                        registro[4] = String.valueOf(subtotal);
+                        dm.addRow(registro);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se encontró el producto con el código " + barcode);
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Error al consultar la base de datos");
+                } finally {
+                    try {
+                        if (rs != null) {
+                            rs.close(); // Cerrar el ResultSet
+                        }
+                        if (ps != null) {
+                            ps.close(); // Cerrar el PreparedStatement
+                        }
+                        if (cn != null) {
+                            cn.close(); // Cerrar la Connection
+                        }
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Error al cerrar la conexión");
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "PRODUCTO NO ENCONTRADO");
+        }
+    }
+
+
+    private void jbtnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarClienteActionPerformed
+        buscarCliente();
+    }//GEN-LAST:event_jbtnBuscarClienteActionPerformed
+
+    private void jtxtCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtCodigoKeyReleased
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            agregarProducto();
+            jtxtCodigo.setText(""); // Limpiar el campo de texto después de agregar el producto
+        }
+    }//GEN-LAST:event_jtxtCodigoKeyReleased
 
     /**
      * @param args the command line arguments
@@ -78,5 +480,32 @@ public class Factura extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton jbtnBuscarCliente;
+    private javax.swing.JButton jbtnRegistrar;
+    private javax.swing.JFormattedTextField jftxtBusquedaCedula;
+    private javax.swing.JLabel jlblCedula;
+    private javax.swing.JLabel jlblDireccion;
+    private javax.swing.JLabel jlblFecFac;
+    private javax.swing.JLabel jlblNombres;
+    private javax.swing.JLabel jlblNumFac;
+    private javax.swing.JLabel jlblSlogan;
+    private javax.swing.JLabel jlblTelefono;
+    private javax.swing.JLabel jlblTitulo;
+    private javax.swing.JTextField jtxtCedula;
+    private javax.swing.JTextField jtxtCodigo;
+    private javax.swing.JTextField jtxtCorreo;
+    private javax.swing.JTextField jtxtDireccion;
+    private javax.swing.JTextField jtxtNombres;
+    private javax.swing.JTextField jtxtTelefono;
     // End of variables declaration//GEN-END:variables
 }
