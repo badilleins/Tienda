@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-07-2023 a las 16:56:51
+-- Tiempo de generación: 13-07-2023 a las 17:19:11
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -68,6 +68,19 @@ INSERT INTO `clientes` (`cedula`, `nombre`, `apellido`, `telefono`, `correo`, `d
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `detalle_factura`
+--
+
+CREATE TABLE `detalle_factura` (
+  `id_pro_ven` varchar(20) NOT NULL,
+  `can_pro_ven` int(11) NOT NULL,
+  `subtotal` decimal(10,0) NOT NULL,
+  `id_fac_per` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `empleados`
 --
 
@@ -87,6 +100,19 @@ CREATE TABLE `empleados` (
 
 INSERT INTO `empleados` (`cedula`, `nombre`, `apellido`, `edad`, `telefono`, `correo`, `contraseña`) VALUES
 ('0950134395', 'Bryan', 'Obando', 21, '0983231570', 'bryanobandochavez@gmail.com', 'visual123');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `factura`
+--
+
+CREATE TABLE `factura` (
+  `id_fac` int(11) NOT NULL,
+  `fec_fac` date NOT NULL,
+  `id_cli_ven` varchar(10) NOT NULL,
+  `total` decimal(10,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -133,10 +159,24 @@ ALTER TABLE `clientes`
   ADD PRIMARY KEY (`cedula`);
 
 --
+-- Indices de la tabla `detalle_factura`
+--
+ALTER TABLE `detalle_factura`
+  ADD KEY `id_fac_per` (`id_fac_per`),
+  ADD KEY `id_pro_ven` (`id_pro_ven`);
+
+--
 -- Indices de la tabla `empleados`
 --
 ALTER TABLE `empleados`
   ADD PRIMARY KEY (`cedula`);
+
+--
+-- Indices de la tabla `factura`
+--
+ALTER TABLE `factura`
+  ADD PRIMARY KEY (`id_fac`),
+  ADD KEY `id_cli_ven` (`id_cli_ven`);
 
 --
 -- Indices de la tabla `productos`
@@ -146,8 +186,31 @@ ALTER TABLE `productos`
   ADD KEY `categoria` (`categoria`);
 
 --
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `factura`
+--
+ALTER TABLE `factura`
+  MODIFY `id_fac` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `detalle_factura`
+--
+ALTER TABLE `detalle_factura`
+  ADD CONSTRAINT `detalle_factura_ibfk_1` FOREIGN KEY (`id_fac_per`) REFERENCES `factura` (`id_fac`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `detalle_factura_ibfk_2` FOREIGN KEY (`id_pro_ven`) REFERENCES `productos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `factura`
+--
+ALTER TABLE `factura`
+  ADD CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`id_cli_ven`) REFERENCES `clientes` (`cedula`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `productos`
