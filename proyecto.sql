@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-07-2023 a las 17:19:11
+-- Tiempo de generación: 13-07-2023 a las 18:04:31
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -74,9 +74,43 @@ INSERT INTO `clientes` (`cedula`, `nombre`, `apellido`, `telefono`, `correo`, `d
 CREATE TABLE `detalle_factura` (
   `id_pro_ven` varchar(20) NOT NULL,
   `can_pro_ven` int(11) NOT NULL,
-  `subtotal` decimal(10,0) NOT NULL,
+  `subtotal` decimal(10,2) NOT NULL,
   `id_fac_per` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_factura`
+--
+
+INSERT INTO `detalle_factura` (`id_pro_ven`, `can_pro_ven`, `subtotal`, `id_fac_per`) VALUES
+('7861123900737', 3, 2.00, 1),
+('6957895955486', 3, 2.00, 1),
+('9788499084978', 4, 48.00, 1),
+('9788479533380', 2, 6.00, 1),
+('9789584258748', 2, 44.00, 1),
+('6939119035198', 3, 137.00, 1),
+('9789942202581', 1, 10.00, 1),
+('7891360472629', 1, 0.00, 1),
+('9788479533380', 3, 9.00, 2),
+('7891360472629', 4, 2.00, 2),
+('7861123900737', 2, 1.00, 2),
+('6957895955486', 2, 1.00, 2),
+('9789942202581', 2, 20.00, 2),
+('6939119035198', 2, 91.00, 2),
+('9789584258748', 2, 44.00, 2),
+('9788499084978', 1, 12.00, 2),
+('9788479533380', 3, 9.00, 3),
+('7891360472629', 4, 2.00, 3),
+('7861123900737', 2, 1.00, 3),
+('6957895955486', 2, 1.00, 3),
+('9789942202581', 2, 20.00, 3),
+('6939119035198', 2, 91.00, 3),
+('9789584258748', 2, 44.00, 3),
+('9788499084978', 1, 12.00, 3),
+('7861123900737', 3, 2.00, 4),
+('6957895955486', 2, 1.00, 4),
+('7861123900737', 3, 1.50, 5),
+('6957895955486', 2, 1.18, 5);
 
 -- --------------------------------------------------------
 
@@ -111,8 +145,19 @@ CREATE TABLE `factura` (
   `id_fac` int(11) NOT NULL,
   `fec_fac` date NOT NULL,
   `id_cli_ven` varchar(10) NOT NULL,
-  `total` decimal(10,0) NOT NULL
+  `total` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `factura`
+--
+
+INSERT INTO `factura` (`id_fac`, `fec_fac`, `id_cli_ven`, `total`) VALUES
+(1, '2023-07-13', '1850178870', 277.00),
+(2, '2023-07-13', '1850178870', 201.00),
+(3, '2023-07-13', '1850178870', 200.57),
+(4, '2023-07-13', '1850178870', 3.00),
+(5, '2023-07-13', '1850178870', 3.00);
 
 -- --------------------------------------------------------
 
@@ -193,7 +238,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_fac` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_fac` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

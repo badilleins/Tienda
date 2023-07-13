@@ -6,6 +6,7 @@ package tienda;
 
 import datos.Conexion;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -252,6 +253,11 @@ public class Factura extends javax.swing.JFrame {
         });
 
         jbtnGuardar.setText("Guardar");
+        jbtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnGuardarActionPerformed(evt);
+            }
+        });
 
         jbtnImprimir.setText("Imprimir Factura");
 
@@ -399,6 +405,7 @@ public class Factura extends javax.swing.JFrame {
             Connection cn = null;
             PreparedStatement ps = null;
             ResultSet rs = null;
+            ResultSet rs2 = null; // Declare rs2 outside the try block
             try {
                 cn = con.getConnection();
                 ps = cn.prepareStatement("SELECT * FROM clientes WHERE cedula=" + cedula + ";");
@@ -415,6 +422,22 @@ public class Factura extends javax.swing.JFrame {
                     DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     String fechaActual = LocalDate.now().format(formatoFecha);
                     jlblFecFac.setText(fechaActual);
+
+                    int idFac = 1; // Valor predeterminado en caso de no encontrar el campo id_fac en la base de datos
+                    try {
+                        PreparedStatement ps2 = cn.prepareStatement("SELECT MAX(id_fac) FROM factura");
+                        rs2 = ps2.executeQuery(); // Assign rs2 to the ResultSet object returned by ps2
+                        if (rs2.next()) {
+                            idFac = rs2.getInt(1) + 1;
+                        }
+                    } catch (SQLException ex) {
+                        // Manejo de excepciones al obtener el valor de id_fac
+                    } finally {
+                        if (rs2 != null) {
+                            rs2.close(); // Close the rs2 ResultSet object
+                        }
+                    }
+                    jlblNumFac.setText(String.valueOf(idFac));
                 } else {
                     JOptionPane.showMessageDialog(null, "NO SE ENCONTRÓ EL CLIENTE");
                 }
@@ -526,6 +549,68 @@ public class Factura extends javax.swing.JFrame {
         jlblTotal.setText(formattedTotal);
     }
 
+    public void insertarDatos() {
+        // Obtener los datos de la interfaz gráfica
+        double total = Double.parseDouble(jlblTotal.getText().replace(",", "."));
+        Date fecha = Date.valueOf(jlblFecFac.getText());
+        String cedula = jtxtCedula.getText();
+        String codigo;
+        int cantidad;
+        double subtotal;
+
+        // Insertar datos en la tabla factura
+        Connection cn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            cn = con.getConnection();
+            ps = cn.prepareStatement("INSERT INTO factura (fec_fac, id_cli_ven, total) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setDate(1, new java.sql.Date(fecha.getTime()));
+            ps.setString(2, cedula);
+            ps.setDouble(3, total);
+            ps.executeUpdate();
+
+            // Obtener el ID de la factura generada
+            rs = ps.getGeneratedKeys();
+            int idFactura = 0;
+            if (rs.next()) {
+                idFactura = rs.getInt(1);
+            }
+
+            // Insertar datos en la tabla detalle_factura
+            for (int i = 0; i < dm.getRowCount(); i++) {
+                codigo = dm.getValueAt(i, 0).toString();
+                cantidad = Integer.parseInt(dm.getValueAt(i, 2).toString());
+                subtotal = Double.parseDouble(dm.getValueAt(i, 4).toString().replace(",", "."));
+
+                ps = cn.prepareStatement("INSERT INTO detalle_factura (id_pro_ven, can_pro_ven, subtotal, id_fac_per) VALUES (?, ?, ?, ?)");
+                ps.setString(1, codigo);
+                ps.setInt(2, cantidad);
+                ps.setDouble(3, subtotal);
+                ps.setInt(4, idFactura);
+                ps.executeUpdate();
+            }
+
+            JOptionPane.showMessageDialog(null, "Datos insertados correctamente");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al insertar datos en la base de datos");
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close(); // Cerrar el ResultSet
+                }
+                if (ps != null) {
+                    ps.close(); // Cerrar el PreparedStatement
+                }
+                if (cn != null) {
+                    cn.close(); // Cerrar la Connection
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión");
+            }
+        }
+    }
+
     private void jbtnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarClienteActionPerformed
         buscarCliente();
     }//GEN-LAST:event_jbtnBuscarClienteActionPerformed
@@ -537,6 +622,10 @@ public class Factura extends javax.swing.JFrame {
             jtxtCodigo.setText(""); // Limpiar el campo de texto después de agregar el producto
         }
     }//GEN-LAST:event_jtxtCodigoKeyReleased
+
+    private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
+        insertarDatos();
+    }//GEN-LAST:event_jbtnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
