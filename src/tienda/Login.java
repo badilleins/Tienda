@@ -174,7 +174,7 @@ public class Login extends javax.swing.JFrame {
             ResultSet rs = null;
             try {
                 cn = con.getConnection();
-                ps = cn.prepareStatement("SELECT cedula FROM clientes WHERE correo ='" + email + "' AND contraseña ='" + pass + "'");
+                ps = cn.prepareStatement("SELECT cedula FROM empleados WHERE correo ='" + email + "' AND contraseña ='" + pass + "'");
                 rs = ps.executeQuery();
                 if (rs.next()) {
                     dispose();
