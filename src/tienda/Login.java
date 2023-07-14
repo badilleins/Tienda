@@ -9,8 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -21,10 +19,9 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     public static Registro fr;
-    public static Principal fp;      
-    
+    public static Principal fp;
+
     Conexion con = new Conexion();
-    Connection cn = con.getConnection();
 
     public Login(JFrame jFrame, boolean par) {
         initComponents();
@@ -172,9 +169,13 @@ public class Login extends javax.swing.JFrame {
         email = jtxtCorreo.getText();
         pass = jtxtContraseña.getText();
         if (!email.equals("") || !pass.equals("")) {
+            Connection cn = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
             try {
-                PreparedStatement ps = cn.prepareStatement("SELECT cedula FROM clientes WHERE correo ='" + email + "' AND contraseña ='" + pass + "'");
-                ResultSet rs = ps.executeQuery();
+                cn = con.getConnection();
+                ps = cn.prepareStatement("SELECT cedula FROM empleados WHERE correo ='" + email + "' AND contraseña ='" + pass + "'");
+                rs = ps.executeQuery();
                 if (rs.next()) {
                     dispose();
                     JOptionPane.showMessageDialog(null, "SESIÓN INICIADA");
@@ -184,14 +185,27 @@ public class Login extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INCORRECTOS");
                 }
             } catch (SQLException e) {
-
+                // Manejo de excepciones
+            } finally {
+                try {
+                    if (rs != null) {
+                        rs.close();
+                    }
+                    if (ps != null) {
+                        ps.close();
+                    }
+                    if (cn != null) {
+                        cn.close();
+                    }
+                } catch (SQLException e) {
+                    // Manejo de excepciones al cerrar los recursos
+                }
             }
-
         } else {
             JOptionPane.showMessageDialog(null, "DEBE COMPLETAR LOS CAMPOS");
         }
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
