@@ -5,10 +5,9 @@
         <group>
             <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/tienda/Login.java</file>
             <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/tienda/Tienda.java</file>
-            <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/tienda/Factura.java</file>
+            <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/factura/Factura.java</file>
             <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/tienda/RegistroClientes.java</file>
-            <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/factura/voucher.jrxml</file>
-            <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/tienda/Principal.java</file>
+            <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/datos/Conexion.java</file>
         </group>
     </open-files>
 </project-private>

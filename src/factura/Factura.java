@@ -655,8 +655,13 @@ public class Factura extends javax.swing.JFrame {
             Connection cn = cc.getConnection();
             Map parameters = new HashMap();
             parameters.put("numFac", jlblNumFac.getText());
-            JasperReport reporte = JasperCompileManager.compileReport("src/factura/voucher.jrxml");
+            
+            InputStream reporteInputStream = Factura.class.getResourceAsStream("/factura/" + "voucher.jrxml");
+            JasperReport reporte = JasperCompileManager.compileReport(reporteInputStream);
             JasperPrint print = JasperFillManager.fillReport(reporte, parameters,cn);
+            JasperViewer jView = new JasperViewer(print, false);
+            jView.setVisible(true);
+            
             JasperViewer.viewReport(print);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(this, "no se pudo" + ex);
