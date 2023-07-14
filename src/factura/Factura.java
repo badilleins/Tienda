@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package tienda;
+package factura;
 
 import datos.Conexion;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -13,9 +14,20 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.jar.JarFile;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -65,7 +77,7 @@ public class Factura extends javax.swing.JFrame {
         jtxtTelefono = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jtxtCorreo = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
+        numeroFactura = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jlblNumFac = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -194,8 +206,8 @@ public class Factura extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0))), "Datos de la Factura"));
+        numeroFactura.setBackground(new java.awt.Color(255, 255, 255));
+        numeroFactura.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0))), "Datos de la Factura"));
 
         jLabel3.setFont(new java.awt.Font("Microsoft JhengHei", 0, 12)); // NOI18N
         jLabel3.setText("Nro Factura:");
@@ -207,11 +219,11 @@ public class Factura extends javax.swing.JFrame {
 
         jlblFecFac.setFont(new java.awt.Font("Microsoft JhengHei", 1, 12)); // NOI18N
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout numeroFacturaLayout = new javax.swing.GroupLayout(numeroFactura);
+        numeroFactura.setLayout(numeroFacturaLayout);
+        numeroFacturaLayout.setHorizontalGroup(
+            numeroFacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(numeroFacturaLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
@@ -222,15 +234,15 @@ public class Factura extends javax.swing.JFrame {
                 .addComponent(jlblFecFac, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(67, 67, 67))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        numeroFacturaLayout.setVerticalGroup(
+            numeroFacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(numeroFacturaLayout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(numeroFacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jlblNumFac)
+                    .addComponent(jlblNumFac, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jlblFecFac)))
+                    .addComponent(jlblFecFac, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -260,6 +272,11 @@ public class Factura extends javax.swing.JFrame {
         });
 
         jbtnImprimir.setText("Imprimir Factura");
+        jbtnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnImprimirActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Subtotal:");
 
@@ -292,7 +309,7 @@ public class Factura extends javax.swing.JFrame {
                 .addGap(6, 6, 6))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(numeroFactura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
@@ -337,7 +354,7 @@ public class Factura extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(numeroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jtxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -625,7 +642,26 @@ public class Factura extends javax.swing.JFrame {
 
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
         insertarDatos();
+        jbtnImprimir.setEnabled(true);
+        jbtnGuardar.setEnabled(false);
+
     }//GEN-LAST:event_jbtnGuardarActionPerformed
+
+    private void jbtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnImprimirActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Conexion cc = new Conexion();
+            Connection cn = cc.getConnection();
+            Map parameters = new HashMap();
+            parameters.put("numFac", jlblNumFac.getText());
+            JasperReport reporte = JasperCompileManager.compileReport("src/factura/voucher.jrxml");
+            JasperPrint print = JasperFillManager.fillReport(reporte, parameters,cn);
+            JasperViewer.viewReport(print);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, "no se pudo" + ex);
+        }
+    }//GEN-LAST:event_jbtnImprimirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -673,7 +709,6 @@ public class Factura extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtnBuscarCliente;
@@ -698,5 +733,6 @@ public class Factura extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtDireccion;
     private javax.swing.JTextField jtxtNombres;
     private javax.swing.JTextField jtxtTelefono;
+    private javax.swing.JPanel numeroFactura;
     // End of variables declaration//GEN-END:variables
 }

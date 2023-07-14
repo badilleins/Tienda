@@ -10,14 +10,15 @@ public class Conexion {
     private static final String usuario = "root";
     private static final String contraseña = "";
     
+    
     public Connection getConnection(){
-        try
-        {
-        return DriverManager.getConnection(url,usuario, contraseña);
-        } catch (Exception e)
-        {
+        Connection con = null;
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con  = DriverManager.getConnection(url, usuario, contraseña);
+        }catch(Exception e){
             JOptionPane.showMessageDialog(null,"no se pudo conectar a la base de datos");
-            return null;
         }
+        return con;
     }
 }

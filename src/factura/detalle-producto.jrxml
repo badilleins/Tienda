@@ -2,11 +2,175 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5e84bccd-3396-48e1-a967-b03b7041d42b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="80"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#BFEFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#E6F9FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#5F9EA0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFFDFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFFEFF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#8FAFCC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="New Dataset 1" uuid="8939f04d-f709-401d-865b-9a71687c9fb9">
+		<parameter name="numFac1" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT p.*, d.can_pro_ven, d.subtotal, d.id_fac_per, d.subtotal as sub
+FROM productos p
+INNER JOIN detalle_factura d ON p.id = d.id_pro_ven
+WHERE d.id_fac_per =$P{numFac1} ;]]>
+		</queryString>
+		<field name="id" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nombre" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="precio" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="categoria" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="can_pro_ven" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="subtotal" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="id_fac_per" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="sub" class="java.math.BigDecimal"/>
+		<variable name="subtotal1" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{subtotal}]]></variableExpression>
+		</variable>
+		<variable name="variable1" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="numFac" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select * from productos;]]>
+		<![CDATA[SELECT p.*, d.can_pro_ven, d.subtotal, d.id_fac_per, d.subtotal as sub
+FROM productos p
+INNER JOIN detalle_factura d ON p.id = d.id_pro_ven
+WHERE d.id_fac_per = $P{numFac};]]>
 	</queryString>
-	<field name="id" class="java.lang.Integer">
+	<field name="id" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="nombre" class="java.lang.String">
@@ -18,54 +182,161 @@
 	<field name="categoria" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="can_pro_ven" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="subtotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_fac_per" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sub" class="java.math.BigDecimal"/>
+	<variable name="sub_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{sub}]]></variableExpression>
+	</variable>
+	<variable name="sub_2" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{sub}]]></variableExpression>
+	</variable>
+	<variable name="sub_3" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{sub}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="79" splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band height="44" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="61" splitType="Stretch">
-			<staticText>
-				<reportElement x="36" y="23" width="100" height="20" uuid="f26696b9-f9ba-4a48-ba1b-a6fa7efa7b49"/>
-				<text><![CDATA[id]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="195" y="23" width="100" height="20" uuid="9212a818-f1ee-4362-94c2-69b363616b87"/>
-				<text><![CDATA[nombre]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="352" y="23" width="100" height="20" uuid="1cd83ae3-ec02-41a9-9314-4ead50461d9c"/>
-				<text><![CDATA[precio]]></text>
-			</staticText>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="51" splitType="Stretch">
-			<textField>
-				<reportElement x="36" y="21" width="100" height="20" uuid="63715aa1-5f28-4072-a47b-657ca3d1b0d1"/>
-				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="195" y="21" width="100" height="20" uuid="5a1f0495-ffca-4117-98d1-f26993756569"/>
-				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="352" y="28" width="100" height="20" uuid="8cb82b20-dc34-44a8-b6fd-6cba8deb7c2c"/>
-				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
-			</textField>
-		</band>
-	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="114">
+			<componentElement>
+				<reportElement key="table 5" style="table 5" x="30" y="17" width="360" height="88" uuid="3da6a962-bf2f-46be-a5a2-73d4214fcbee"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="New Dataset 1" uuid="d2ed6bdd-4644-4658-bd1b-9efbf8a8e559">
+						<datasetParameter name="numFac1">
+							<datasetParameterExpression><![CDATA[$P{numFac}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="149" uuid="18aba9f0-3882-4d91-b950-bb9a3e6aebe6">
+						<jr:columnHeader style="table 5_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="149" height="30" uuid="81c4718d-2c8f-4dc5-b769-fa5a2adbbbbf"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<text><![CDATA[Producto]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 5_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="149" height="28" uuid="75b9edd8-e71d-4fb4-9c84-b01e347617fc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="c911945c-88d3-4d96-b2c9-a3ba408049be">
+						<jr:columnHeader style="table 5_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="c34fe292-0539-4ae0-b25f-700d026a2f96"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<text><![CDATA[Precio Unitario]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 5_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="28" uuid="e4fefd65-1c7b-48ee-8b9a-87017f9147d1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="7a732ba0-0677-4ea4-bf93-813d15928d15">
+						<jr:tableFooter height="55" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="30" width="90" height="25" uuid="caa0a3cf-9105-49af-8e13-c7cd2592fd23"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[TOTAL:]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="1" width="90" height="29" uuid="2d32f2f9-c7fb-4937-b71a-19c3383a1048"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[% IVA:]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader style="table 5_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="baec06c1-af00-4014-ac4d-9d03d8a40919"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<text><![CDATA[Cantidad]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="31" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="31" uuid="37a99a48-0449-4563-aa7c-39c186ad6b54"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[SUBTOTAL:]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="table 5_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="28" uuid="6d0e2072-291e-4488-a386-a39a703a8ae2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{can_pro_ven}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="1c2d3c54-b483-4bc3-a4b3-7477fc664c26">
+						<jr:tableFooter height="55" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="a83d9bcb-3b64-448e-bd54-1fb0c08ed350"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[12%]]></text>
+							</staticText>
+							<textField pattern="#0.00">
+								<reportElement x="0" y="30" width="90" height="25" uuid="fed87b23-e1bb-4f9b-a1cd-1a92c2598e97"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[($V{subtotal1}*0.12)+$V{subtotal1}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table 5_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="c632e3fb-ba9d-4e08-8d7d-5073c3d649c2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="31" rowSpan="1">
+							<textField pattern="#0.00">
+								<reportElement x="0" y="0" width="90" height="30" uuid="a740daa2-4d6b-4865-a8d3-3ec6149f93ea"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{subtotal1}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table 5_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="28" uuid="72f22f77-cddc-49c0-a277-914db87628d6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
 	</summary>
 </jasperReport>

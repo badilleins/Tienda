@@ -4,6 +4,7 @@
  */
 package tienda;
 
+import factura.Factura;
 import datos.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +20,7 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     public static Registro fr;
-    public static Principal fp;
+    public static Factura fp;
 
     Conexion con = new Conexion();
 
@@ -108,22 +109,22 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(156, 156, 156)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
+                .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jtxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65)
+                    .addComponent(jtxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(53, 53, 53)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtxtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
+                .addGap(73, 73, 73)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbRegistrarse)
                     .addComponent(jbIngresar))
@@ -179,7 +180,7 @@ public class Login extends javax.swing.JFrame {
                 if (rs.next()) {
                     dispose();
                     JOptionPane.showMessageDialog(null, "SESIÓN INICIADA");
-                    fp = new Principal();
+                    fp = new Factura(this,true);
                     fp.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INCORRECTOS");
