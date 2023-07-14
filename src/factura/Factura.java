@@ -27,7 +27,9 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import tienda.RegistroClientes;
 
 /**
  *
@@ -37,6 +39,7 @@ public class Factura extends javax.swing.JFrame {
 
     Conexion con = new Conexion();
     DefaultTableModel dm = new DefaultTableModel();
+    RegistroClientes fr;
 
     /**
      * Creates new form Factura
@@ -47,6 +50,7 @@ public class Factura extends javax.swing.JFrame {
         String titulos[] = {"Codigo", "Nombre", "Cantidad", "Precio", "Subtotal"};
         dm.setColumnIdentifiers(titulos);
         jTable1.setModel(dm);
+        jbtnImprimir.setEnabled(false);
     }
 
     /**
@@ -126,6 +130,11 @@ public class Factura extends javax.swing.JFrame {
         jftxtBusquedaCedula.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jbtnRegistrar.setText("Registrar");
+        jbtnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnRegistrarActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Datos del Cliente"))));
@@ -644,7 +653,6 @@ public class Factura extends javax.swing.JFrame {
         insertarDatos();
         jbtnImprimir.setEnabled(true);
         jbtnGuardar.setEnabled(false);
-
     }//GEN-LAST:event_jbtnGuardarActionPerformed
 
     private void jbtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnImprimirActionPerformed
@@ -652,21 +660,28 @@ public class Factura extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Conexion cc = new Conexion();
-            Connection cn = cc.getConnection();
-            Map parameters = new HashMap();
-            parameters.put("numFac", jlblNumFac.getText());
+            JasperReport reporte=null;
+            String path= "src\\factura\\voucher.jasper";
+            Map parametros = new HashMap();
+            parametros.put("numFac", jlblNumFac.getText());
+            reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint jprint= JasperFillManager.fillReport(path,parametros,cc.getConnection());
+            JasperViewer view=new JasperViewer(jprint,false);
             
-            InputStream reporteInputStream = Factura.class.getResourceAsStream("/factura/" + "voucher.jrxml");
-            JasperReport reporte = JasperCompileManager.compileReport(reporteInputStream);
-            JasperPrint print = JasperFillManager.fillReport(reporte, parameters,cn);
-            JasperViewer jView = new JasperViewer(print, false);
-            jView.setVisible(true);
+            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            view.setVisible(true);
             
-            JasperViewer.viewReport(print);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(this, "no se pudo" + ex);
         }
     }//GEN-LAST:event_jbtnImprimirActionPerformed
+
+    private void jbtnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRegistrarActionPerformed
+        // TODO add your handling code here:
+        fr = new RegistroClientes();
+        fr.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jbtnRegistrarActionPerformed
 
     /**
      * @param args the command line arguments
