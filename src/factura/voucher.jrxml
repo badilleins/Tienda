@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="33555da9-40a0-4747-899f-ee52fea7a78f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select  * from clientes;]]>
+	</queryString>
+	<field name="cedula" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="apellido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="edad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="correo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contraseña" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="25" width="555" height="34" uuid="d15c463f-0204-4913-9492-f1d3f2bba362"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIENDA CUARTO SOFTWARE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="55" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="432" y="22" width="100" height="20" uuid="8f72e6bc-0127-410d-8cd7-cd5aeff06059"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="396" y="22" width="36" height="20" uuid="e9d29be7-e3e1-482b-aa87-628767b65920"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="249" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="78" width="555" height="156" uuid="9ce4d959-8bec-459b-9666-5941bfceaf36"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\Personal\\Documents\\NetBeansProjects\\Tienda\\src\\factura\\detalle-producto.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="93" y="12" width="57" height="20" uuid="07e6b99f-c7a1-46b3-ae4b-ab48ad49224f"/>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="12" width="64" height="20" uuid="20fd3a00-98a7-4ece-b232-b85f645fad12"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="12" width="60" height="20" uuid="9140d6e1-4ebe-46f9-b41f-f93b97e7d3ce"/>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="58" y="12" width="35" height="20" uuid="5b3716a6-84c0-4052-8cdf-fdf9c816948a"/>
+				<text><![CDATA[cedula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="295" y="12" width="37" height="20" uuid="13155411-2cfb-44d6-bf85-9cf4a73037e5"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[cliente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="93" y="48" width="123" height="20" uuid="8dcf7821-ef85-42d0-adc3-9c4d22bbc7de"/>
+				<textFieldExpression><![CDATA[$F{correo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="58" y="48" width="35" height="20" uuid="f02abc8f-12ac-4e41-93d3-4ea997fb481c"/>
+				<text><![CDATA[correo]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
