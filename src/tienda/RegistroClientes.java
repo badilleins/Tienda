@@ -4,6 +4,7 @@
  */
 package tienda;
 
+import factura.Factura;
 import datos.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documentos%20U/4%20Semestre/Compu%20Visual/Tienda/src/datos/Conexion.java</file>
-            <file>file:/D:/Documentos%20U/4%20Semestre/Compu%20Visual/Tienda/src/tienda/Factura.java</file>
+            <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/factura/Factura.java</file>
+            <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/tienda/RegistroClientes.java</file>
+            <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/datos/Conexion.java</file>
+            <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/factura/detalle-producto.jrxml</file>
+            <file>file:/C:/Users/Personal/Documents/NetBeansProjects/Tienda/src/factura/voucher.jrxml</file>
         </group>
     </open-files>
 </project-private>
